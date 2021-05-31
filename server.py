@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-import socket
+from openctrl import  socket
 import pickle
-s=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+s=socket.Socket(socket.AF_INET,socket.SOCK_DGRAM)
 s.bind(('gtsforum.xyz',6352))
 def main():
         reg=None
         wut={}
         while True:
-            data,addr=s.recvfrom(19939837)
+            data,addr=s.receive()
             """
             if data==b"\x04\x01":
                 if addr in reg:
@@ -32,19 +32,19 @@ def main():
                 if reg:
                     wut[reg]=addr
                     wut[addr]=reg
-                    s.sendto(b'\x00',addr)
-                    s.sendto(b'\x00',reg)
+                    s.post(b'\x00',addr)
+                    s.post(b'\x00',reg)
                     reg=None
                 else:
 
                     reg=addr
-                    s.sendto(b'\x02',addr)
+                    s.post(b'\x02',addr)
             else:
                 if addr in wut:
-                    s.sendto(data,wut[addr])
+                    s.post(data,wut[addr])
                 else:
 
-                    s.sendto(b'\x01',addr)
+                    s.post(b'\x01',addr)
             print(reg)
             print(wut)
 

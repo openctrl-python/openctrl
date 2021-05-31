@@ -1,24 +1,30 @@
-import socket
+from socket import *
 import _io
-class socket(socket.socket):
-    def __init__(self,bufsize=1024,*args,**kwargs):
+class Socket(socket):
+    def __init__(self,*args,**kwargs):
+        bufsize=kwargs.get("bufsize",1024)
         if bufsize<10:
             raise ValueError("buffer too small")
         self.bufsize=bufsize
+        if "bufsize" in kwargs:
+            del kwargs["bufsize"]
         super().__init__(*args,**kwargs)
     def receive(self):
         result=b""
         inmsg=False
+        addr=None
         while True:
             m=self.recvfrom(self.bufsize)
-            if m==b'\x00'
+            addr=m[1]
+            m=m[0]
+            if m==b'\x00':
                 inmsg=True
             elif inmsg:
                 result+=m
             elif m==b'\xff':
                 inmsg=False
                 break
-        return result
+        return result,addr
     def post(self,data,addr):
         
         data=_io.BytesIO(data)

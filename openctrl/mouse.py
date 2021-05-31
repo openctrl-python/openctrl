@@ -18,10 +18,10 @@ def parse(opt):
 def config(s,a):
     def move(x,y):
         data=b'mm'+pickle.dumps((x,y))  
-        s.sendto(data,a)
+        s.post(data,a)
     def click(x,y,b,r):
         data=b'mc'+pickle.dumps((x,y))  
-        s.sendto(data,a)
+        s.post(data,a)
     listen=Listener(on_move=move,on_click=click)
     listen.start()
 
