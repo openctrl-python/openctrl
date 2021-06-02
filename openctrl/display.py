@@ -1,5 +1,7 @@
 import threading
-from .grab import Image
+try:
+    from .grab import Image
+except:pass
 def grab_bytes():
     return Image().asbytes
 def send(s,a):

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-from openctrl import  socket
+import openctrl.sock as socket_
 import pickle
-s=socket.Socket(socket.AF_INET,socket.SOCK_DGRAM)
+s=socket_.Socket(socket.AF_INET,socket.SOCK_DGRAM)
 s.bind(('gtsforum.xyz',6352))
 def main():
         reg=None

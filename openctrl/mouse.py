@@ -1,6 +1,12 @@
-from pynput.mouse import *
+try:
+    from pynput.mouse import *
+except:
+    import warnings
+    warnings.warn(UserWarning("No X server running."))
 import pickle
-mouse=Controller()
+try:
+    mouse=Controller()
+except:pass
 def parse(opt):
     if not opt.startswith(b'm'):
         return
